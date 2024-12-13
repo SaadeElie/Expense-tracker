@@ -1,4 +1,5 @@
 using Adv._Project.Data;
+using Adv._Project.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>() 
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddScoped<CurrencyService>(); // registering the service ~ELIE
 
 builder.Services.AddControllersWithViews();
 
