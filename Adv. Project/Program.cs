@@ -1,4 +1,5 @@
 using Adv._Project.Data;
+using Adv._Project.Seeders;
 using Adv._Project.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
@@ -25,9 +27,8 @@ var app = builder.Build();
 
 // Seed roles
 using var scope = app.Services.CreateScope();
-await RoleSeeder.SeedRoles(scope.ServiceProvider);
-
-// Configure the HTTP request pipeline.
+await RoleSeeder.SeedRoles(scope.ServiceProvider); // For roles
+CategorySeeder.SeedCategories(scope.ServiceProvider); // For categories// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
