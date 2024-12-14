@@ -10,58 +10,8 @@
     </div>
 
     <!------------------------------------------------------------------------------------------------------------------------------->
-    <!-- Trigger Button -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#floatingFormModal">
-        Open Form
-    </button>
+    <a href="/Transactions" class="btn btn-primary">Add Transaction</a>
 
-    <!-- Modal -->
-    <div class="modal fade" id="floatingFormModal" tabindex="-1" aria-labelledby="floatingFormModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Submit Your Data</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form -->
-                    <form id="ajaxForm" action="/YourController/YourAction" method="post">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" id="name" name="Name" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" name="Email" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).on('submit', '#ajaxForm', function (e) {
-            e.preventDefault(); // Prevent default form submission
-
-            var form = $(this);
-
-            $.ajax({
-                url: form.attr('action'), // Backend URL
-                type: form.attr('method'), // HTTP method (POST)
-                data: form.serialize(), // Form data
-                success: function (response) {
-                    alert('Form submitted successfully: ' + response.message);
-                    $('#floatingFormModal').modal('hide'); // Close the modal
-                },
-                error: function (xhr) {
-                    alert('Something went wrong: ' + xhr.responseText);
-                }
-            });
-        });
-    </script>
     <!------------------------------------------------------------------------------------------------------------------------------->
 
     <div class="row">
