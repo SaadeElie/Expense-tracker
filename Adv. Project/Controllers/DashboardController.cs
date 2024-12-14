@@ -23,20 +23,37 @@ namespace Adv._Project.Controllers
             _userManager = userManager;
         }
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string timeRange)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return Challenge();
             }
+
             System.Diagnostics.Debug.WriteLine("IM TRYING TO PRINT SOMETHING AAAAAAAAAAAAAAAAAAAAAAAAAA");
-            // Ensure transactions are not null
+
+            // Fetch all transactions for the user
             var transactions = await _context.Transactions
                 .Where(t => t.UserId == user.Id)
                 .ToListAsync() ?? new List<Transaction>();
 
-            // Defensive programming for calculations
+            // Apply time range filtering if specified
+            DateTime now = DateTime.Now;
+            if (timeRange == "ThisMonth")
+            {
+                transactions = transactions
+                    .Where(t => t.Date.Year == now.Year && t.Date.Month == now.Month)
+                    .ToList();
+            }
+            else if (timeRange == "ThisYear")
+            {
+                transactions = transactions
+                    .Where(t => t.Date.Year == now.Year)
+                    .ToList();
+            }
+
+            // Calculate total income and expenses
             var totalIncome = transactions
                 .Where(t => t.Type == TransactionType.Income)
                 .DefaultIfEmpty()
@@ -47,17 +64,18 @@ namespace Adv._Project.Controllers
                 .DefaultIfEmpty()
                 .Sum(t => t.Amount);
 
-            // Safer savings rate calculation
+            // Calculate savings rate
             var savingsRate = totalIncome > 0
                 ? Math.Round(Math.Max(0, totalIncome - totalExpenses) / totalIncome * 100, 2)
                 : 0;
 
-            // Ensure these are never null
+            // Fetch recent transactions
             var recentTransactions = transactions
                 .OrderByDescending(t => t.Date)
                 .Take(10)
                 .ToList() ?? new List<Transaction>();
 
+            // Group expenses by category
             var expensesByCategory = transactions
                 .Where(t => t.Type == TransactionType.Expense)
                 .GroupBy(t => t.Category ?? "Uncategorized")
@@ -72,8 +90,10 @@ namespace Adv._Project.Controllers
                 .OrderByDescending(c => c.TotalAmount)
                 .ToList() ?? new List<CategoryExpense>();
 
+            // Group transactions by month
             var monthlyFinancials = transactions
-                .GroupBy(t => new {
+                .GroupBy(t => new
+                {
                     Year = t.Date.Year,
                     Month = t.Date.Month
                 })
@@ -87,6 +107,7 @@ namespace Adv._Project.Controllers
                 .Take(6)
                 .ToList() ?? new List<MonthlyFinancial>();
 
+            // Prepare the view model
             var viewModel = new DashboardViewModel
             {
                 TotalIncome = totalIncome,
@@ -99,5 +120,6 @@ namespace Adv._Project.Controllers
 
             return View("~/Views/Home/Index.cshtml", viewModel);
         }
+
     }
 }
