@@ -9,173 +9,145 @@
         </div>
     </div>
 </div>
+<form method="get" class="d-flex align-items-center mb-4">
+    <label for="currency" class="form-label me-2 mb-0">Currency:</label>
+    <select name="currency" id="currency" class="form-select me-2 w-auto">
+        @foreach (var currency in new[] { "USD", "EUR", "GBP", "JPY" })
+        {
+            if (ViewBag.SelectedCurrency == currency)
+            {
+                <option value="@currency" selected>@currency</option>
+            }
+            else
+            {
+                <option value="@currency">@currency</option>
+            }
+        }
+    </select>
+    <button type="submit" class="btn btn-primary">Switch</button>
+</form>
 
 
-    <!------------------------------------------------------------------------------------------------------------------------------->
-    <a href="/Transactions/Create" class="btn btn-primary mb-4">Add Transaction</a>
 
-    <!------------------------------------------------------------------------------------------------------------------------------->
 
-    <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Income</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                @Model.TotalIncome.ToString("C")
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+
+
+<a href="/Transactions/Create" class="btn btn-primary mb-4">Add Transaction</a>
+
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Income</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            @ViewBag.SelectedCurrency @Model.TotalIncome.ToString("N2")
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Expenses</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                @Model.TotalExpenses.ToString("C")
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-chart-line fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Savings Rate</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                @Model.SavingsRate%
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-piggy-bank fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Net Worth</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                @((Model.TotalIncome - Model.TotalExpenses).ToString("C"))
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-wallet fa-2x text-gray-300"></i>
-                        </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Monthly Financial Overview</h6>
-                    <div class="dropdown no-arrow">
-                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow">
-                            <div class="dropdown-header">Actions:</div>
-                            <a href="#" class="dropdown-item">Export</a>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Expenses</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            @ViewBag.SelectedCurrency @Model.TotalExpenses.ToString("N2")
                         </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="monthlyFinancialsChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Expense Categories</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                        <canvas id="expenseCategoriesChart"></canvas>
-                    </div>
-                    <div class="mt-4 text-center small">
-                        @foreach (var category in Model.ExpensesByCategory)
-                        {
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-primary"></i> @category.Category
-                            </span>
-                        }
+                    <div class="col-auto">
+                        <i class="fas fa-chart-line fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">Recent Transactions</h6>
-                    <a href="/Transactions" class="btn btn-primary btn-sm">Details</a>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Description</th>
-                                    <th>Category</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var transaction in Model.RecentTransactions)
-                                {
-                                    <tr>
-                                        <td>@transaction.Date.ToShortDateString()</td>
-                                        <td>@transaction.Description</td>
-                                        <td>@transaction.Category</td>
-                                        <td class="@(transaction.Type == TransactionType.Expense ? "text-danger" : "text-success")">
-                                            @transaction.Amount.ToString("C")
-                                        </td>
-                                        <td>@transaction.Type</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Savings Rate</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            @Model.SavingsRate%
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-piggy-bank fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Net Worth</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            @ViewBag.SelectedCurrency @((Model.TotalIncome - Model.TotalExpenses).ToString("N2"))
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Transactions</h6>
+                <a href="/Transactions" class="btn btn-primary btn-sm">Details</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var transaction in Model.RecentTransactions)
+                            {
+                                <tr>
+                                    <td>@transaction.Date.ToShortDateString()</td>
+                                    <td>@transaction.Description</td>
+                                    <td>@transaction.Category</td>
+                                    <td class="@(transaction.Type == TransactionType.Expense ? "text-danger" : "text-success")">
+                                        @ViewBag.SelectedCurrency @transaction.Amount.ToString("N2")
+                                    </td>
+                                    <td>@transaction.Type</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

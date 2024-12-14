@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Adv._Project.Services;
 
 namespace Adv._Project.Controllers
 {
@@ -14,16 +15,20 @@ namespace Adv._Project.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly CurrencyService _currencyService;
 
         public DashboardController(
             ApplicationDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            CurrencyService currencyService)
         {
             _context = context;
             _userManager = userManager;
+            _currencyService = currencyService;
         }
+
         [Authorize]
-        public async Task<IActionResult> Index(string timeRange)
+        public async Task<IActionResult> Index(string timeRange, string currency = "USD")
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -51,6 +56,15 @@ namespace Adv._Project.Controllers
                 transactions = transactions
                     .Where(t => t.Date.Year == now.Year)
                     .ToList();
+            }
+
+            // Convert transaction amounts if a different currency is selected
+            if (currency != "USD")
+            {
+                for (int i = 0; i < transactions.Count; i++)
+                {
+                    transactions[i].Amount = await _currencyService.ConvertCurrencyAsync(transactions[i].Amount, "USD", currency);
+                }
             }
 
             // Calculate total income and expenses
@@ -118,8 +132,8 @@ namespace Adv._Project.Controllers
                 MonthlyFinancials = monthlyFinancials
             };
 
+            ViewBag.SelectedCurrency = currency; // Pass the selected currency to the view
             return View("~/Views/Home/Index.cshtml", viewModel);
         }
-
     }
 }
