@@ -4,51 +4,37 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Transaction Details</h6>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">User ID</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.UserId)</dd>
 
-<div>
-    <h4>Transaction</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+
+            <dt class="col-sm-3">Amount</dt>
+            <dd class="col-sm-9">
+                <span class="@(Model.Type == Adv._Project.Models.TransactionType.Expense ? "text-danger" : "text-success")">
+                    @Model.Amount.ToString("C")
+                </span>
+            </dd>
+
+            <dt class="col-sm-3">Type</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Type)</dd>
+
+            <dt class="col-sm-3">Date</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Date)</dd>
+
+            <dt class="col-sm-3">Category</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Category)</dd>
+        </dl>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning btn-sm">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary btn-sm">Back to List</a>
+    </div>
 </div>

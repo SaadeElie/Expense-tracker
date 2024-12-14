@@ -15,6 +15,7 @@ namespace Adv._Project.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        
 
         public TransactionsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
@@ -25,7 +26,11 @@ namespace Adv._Project.Controllers
         // GET: Transactions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Transactions.ToListAsync());
+            var user = await _userManager.GetUserAsync(User);
+
+            return View(await _context.Transactions
+                .Where(t => t.UserId == user.Id)
+                .ToListAsync());
         }
 
         // GET: Transactions/Details/5
