@@ -79,6 +79,11 @@ namespace Adv._Project.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at most {1} characters long.", MinimumLength = 3)]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -114,13 +119,17 @@ namespace Adv._Project.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                // Explicitly set the username to the custom input
+                user.UserName = Input.Username; // Set the custom username here
+
+                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None); // Ensure this matches
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "StandardUser"); // added for default user role upon sign up
+                    await _userManager.AddToRoleAsync(user, "StandardUser"); // Default role
 
                     _logger.LogInformation("User created a new account with password.");
 
@@ -138,7 +147,6 @@ namespace Adv._Project.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
@@ -152,6 +160,7 @@ namespace Adv._Project.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
 
             // If we got this far, something failed, redisplay form
             return Page();
