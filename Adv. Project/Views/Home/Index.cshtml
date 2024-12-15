@@ -36,7 +36,7 @@
     <input type="hidden" name="timeRange" value="@ViewContext.HttpContext.Request.Query["timeRange"]" />
     <label for="currency" class="form-label me-2 mb-0">Currency:</label>
     <select name="currency" id="currency" class="form-select me-2 w-auto">
-        @foreach (var currency in new[] { "USD", "EUR", "GBP", "JPY" })
+        @foreach (var currency in new[] { "USD", "EUR", "GBP", "JPY", "LBP"})
         {
             if (ViewBag.SelectedCurrency == currency)
             {
