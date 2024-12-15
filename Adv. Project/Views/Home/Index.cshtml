@@ -20,13 +20,11 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0 text-gray-800">Financial Dashboard</h1>
         <div class="btn-group" role="group">
-            <a href="?timeRange=ThisMonth&currency=@ViewBag.SelectedCurrency" class="btn btn-outline-primary">This Month</a>
-            <a href="?timeRange=ThisYear&currency=@ViewBag.SelectedCurrency" class="btn btn-outline-primary">This Year</a>
+            <a href="?timeRange=ThisMonth&currency=@ViewBag.SelectedCurrency" class="btn time-filter-btn">This Month</a>
+            <a href="?timeRange=ThisYear&currency=@ViewBag.SelectedCurrency" class="btn time-filter-btn">This Year</a>
         </div>
-
     </div>
 </div>
-
 
 <form method="get" class="d-flex align-items-center mb-4">
     <input type="hidden" name="timeRange" value="@ViewContext.HttpContext.Request.Query["timeRange"]" />
@@ -44,17 +42,11 @@
             }
         }
     </select>
-    <button type="submit" class="btn btn-primary">Switch</button>
+    <button type="submit" class="btn btn-switch">Switch</button>
 </form>
 
+<a href="/Transactions/Create" class="btn btn-add-transaction mb-4">Add Transaction</a>
 
-
-
-
-
-
-
-<a href="/Transactions/Create" class="btn btn-primary mb-4">Add Transaction</a>
 
 <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
