@@ -1,14 +1,20 @@
 ﻿@model Adv._Project.Models.DashboardViewModel
 
-@if (User.IsInRole("PremiumUser"))
-{
-    <li class="nav-item" style="list-style: none;">
-        <a class="nav-link premium-button"
-           asp-controller="PremiumFeatures"
-           asp-action="Index">
-            Premium Features
-        </a>
-    </li>
+@if (Model != null)
+{ 
+    @if (User?.Identity?.IsAuthenticated == true)
+    {
+        if (User.IsInRole("PremiumUser"))
+        {
+            <li class="nav-item" style="list-style: none;">
+                <a class="nav-link premium-button"
+                   asp-controller="PremiumFeatures"
+                   asp-action="Index">
+                    Premium Features
+                </a>
+            </li>
+        }
+    }
 }
 
 

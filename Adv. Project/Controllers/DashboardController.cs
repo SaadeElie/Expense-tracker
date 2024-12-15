@@ -31,6 +31,7 @@ namespace Adv._Project.Controllers
         public async Task<IActionResult> Index(string timeRange, string currency = "USD")
         {
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return Challenge();
@@ -70,13 +71,15 @@ namespace Adv._Project.Controllers
             // Calculate total income and expenses
             var totalIncome = transactions
                 .Where(t => t.Type == TransactionType.Income)
-                .DefaultIfEmpty()
-                .Sum(t => t.Amount);
+                .Select(t=>t.Amount)
+                .DefaultIfEmpty(0)
+                .Sum();
 
             var totalExpenses = transactions
                 .Where(t => t.Type == TransactionType.Expense)
-                .DefaultIfEmpty()
-                .Sum(t => t.Amount);
+                .Select(t => t.Amount)
+                .DefaultIfEmpty(0)
+                .Sum();
 
             // Calculate savings rate
             var savingsRate = totalIncome > 0
