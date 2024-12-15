@@ -4,24 +4,33 @@
     ViewData["Title"] = "Advanced Analytics";
 }
 
-<h1>Advanced Analytics</h1>
+<div id="advanced-analytics" class="container mt-4">
+    <div class="text-center mb-4">
+        <h1 class="display-4 text-primary">Advanced Analytics</h1>
+        <p class="lead">Gain deeper insights into your monthly financial data.</p>
+    </div>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Month</th>
-            <th>Total Income</th>
-            <th>Total Expenses</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Month</td>
-                <td>@item.Income.ToString("C")</td>
-                <td>@item.Expenses.ToString("C")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <table class="table table-bordered text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Month</th>
+                        <th class="text-success">Total Income</th>
+                        <th class="text-danger">Total Expenses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.Month</strong></td>
+                            <td class="text-success font-weight-bold">@item.Income.ToString("C")</td>
+                            <td class="text-danger font-weight-bold">@item.Expenses.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

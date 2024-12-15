@@ -3,14 +3,14 @@
 @if (User.IsInRole("PremiumUser"))
 {
     <li class="nav-item" style="list-style: none;">
-        <a class="nav-link btn btn-outline-primary me-2"
-           style="width: auto; display: inline-block;"
+        <a class="nav-link premium-button"
            asp-controller="PremiumFeatures"
            asp-action="Index">
             Premium Features
         </a>
     </li>
 }
+
 
 
 

@@ -1,13 +1,32 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Premium Features";
 }
 
-<h1>Premium Features</h1>
-
-<p>Welcome to the premium features dashboard!</p>
-
-<ul>
-    <li><a asp-action="AdvancedAnalytics">View Advanced Analytics</a></li>
-    <li><a asp-action="DownloadReport">Download Reports</a></li>
-</ul>
+<div id="premium-features" class="container mt-4">
+    <div class="text-center">
+        <h1 class="display-4 text-primary">Premium Features</h1>
+        <p class="lead">Welcome to the premium features dashboard!</p>
+    </div>
+    <div class="row justify-content-center">
+        <!-- Advanced Analytics -->
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-primary">Advanced Analytics</h5>
+                    <p class="card-text">Gain deeper insights into your financial data with advanced analytics.</p>
+                    <a asp-action="AdvancedAnalytics" class="btn btn-primary">View Analytics</a>
+                </div>
+            </div>
+        </div>
+        <!-- Download Reports -->
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-success">Download Reports</h5>
+                    <p class="card-text">Export your financial data to reports for detailed analysis.</p>
+                    <a asp-action="DownloadReport" class="btn btn-success">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
