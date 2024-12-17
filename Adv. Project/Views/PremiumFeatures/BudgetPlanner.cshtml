@@ -1,0 +1,43 @@
+﻿@model BudgetPlannerViewModel
+@{
+    ViewData["Title"] = "Budget Planner";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Budget Planner</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header text-primary font-weight-bold">
+            Set Your Monthly Budget
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="BudgetPlanner">
+                <div class="form-group mb-3">
+                    <label for="budget">Enter Budget Amount</label>
+                    <input type="number" step="0.01" name="budget" id="budget" class="form-control" value="@Model.Budget" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save Budget</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header text-success font-weight-bold">
+            Monthly Progress
+        </div>
+        <div class="card-body">
+            <p>Total Expenses This Month: <strong>@Model.MonthlyExpenses.ToString("C")</strong></p>
+            <p>Budget: <strong>@Model.Budget.ToString("C")</strong></p>
+            <div class="progress">
+                <div class="progress-bar @(Model.MonthlyExpenses > Model.Budget ? "bg-danger" : "bg-success")"
+                     role="progressbar"
+                     style="width: @(Model.Budget > 0 ? (Model.MonthlyExpenses / Model.Budget * 100) : 0)%;"
+                     aria-valuenow="@(Model.MonthlyExpenses)"
+                     aria-valuemin="0"
+                     aria-valuemax="@(Model.Budget)">
+                    @(Model.Budget > 0 ? (Model.MonthlyExpenses / Model.Budget * 100).ToString("F0") : "0")%
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
