@@ -8,6 +8,8 @@ namespace Adv._Project.Data
 {
     public static class RoleSeeder
     {
+
+        
         public static async Task SeedRoles(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -22,6 +24,8 @@ namespace Adv._Project.Data
                 }
             }
         }
+
+        
     }
 
 }

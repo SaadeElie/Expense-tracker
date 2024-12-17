@@ -14,12 +14,12 @@ namespace Adv._Project.Controllers
     public class DashboardController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly CurrencyService _currencyService;
 
         public DashboardController(
             ApplicationDbContext context,
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             CurrencyService currencyService)
         {
             _context = context;
