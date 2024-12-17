@@ -16,11 +16,11 @@ namespace Adv._Project.Controllers
     public class PremiumFeaturesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public PremiumFeaturesController(
             ApplicationDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -95,5 +95,35 @@ namespace Adv._Project.Controllers
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
             }
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> BudgetPlanner()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var expensesThisMonth = _context.Transactions
+                .Where(t => t.UserId == user.Id && t.Date.Month == DateTime.Now.Month && t.Type == TransactionType.Expense)
+                .Sum(t => t.Amount);
+
+            var model = new BudgetPlannerViewModel
+            {
+                Budget = user.MonthlyBudget,
+                MonthlyExpenses = expensesThisMonth
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BudgetPlanner(decimal budget)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                user.MonthlyBudget = budget;
+                await _userManager.UpdateAsync(user);
+            }
+            return RedirectToAction("BudgetPlanner");
+        }
+        
     }
 }
