@@ -1,0 +1,84 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-md-6">
+        <section class="card shadow-sm p-4" style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.2) !important">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Log in to your account</h2>
+
+                <!-- Validation Errors -->
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                <form id="account" method="post">
+                    <!-- Email Field -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Email" id="email" class="form-control" placeholder="Email" autocomplete="username" aria-required="true" />
+                        <label asp-for="Input.Email" class="form-label">Email address</label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" id="password" class="form-control" placeholder="Password" autocomplete="current-password" aria-required="true" type="password" />
+                        <label asp-for="Input.Password" class="form-label">Password</label>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                    <!-- Remember Me Checkbox -->
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                        <label class="form-check-label" asp-for="Input.RememberMe">
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-login btn-primary w-100 btn-lg mb-3">Log in</button>
+
+                    <!-- Links Below the Form -->
+                    <div class="text-center">
+                        <p class="no-account">
+                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        </p>
+                        <p class="no-account">
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Don't have an account? Register here</a>
+                        </p>
+                        <p class="no-account">
+                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Third-party Login Section -->
+        @* <section class="mt-5 text-center">
+            <h4>Or log in using a third-party service:</h4>
+            <hr />
+            @if ((Model.ExternalLogins?.Count ?? 0) == 0)
+            {
+                <p>External authentication services are not configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article</a> to learn more.</p>
+            }
+            else
+            {
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <div>
+                        @foreach (var provider in Model.ExternalLogins!)
+                        {
+                            <button type="submit" class="btn btn-outline-primary w-100 mb-2" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                        }
+                    </div>
+                </form>
+            }
+        </section> *@
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
