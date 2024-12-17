@@ -6,46 +6,50 @@
 
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="col-md-6">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="card p-4 shadow-sm">
-            <h2 class="text-center mb-4">Create a New Account</h2>
+    <div class="col-md-6" >
+        <section class="card shadow-sm p-4" style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.2) !important">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Create a New Account</h2>
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="card p-4 shadow-sm">
 
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
 
-            @* Email Field with Floating Label *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" id="email" class="form-control" autocomplete="username" placeholder="name@example.com" />
-                <label for="email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    @* Email Field with Floating Label *@
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Email" id="email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+                        <label for="email">Email</label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    @* Username Field with Floating Label *@
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Username" id="username" class="form-control" placeholder="Username" />
+                        <label for="username">Username</label>
+                        <span asp-validation-for="Input.Username" class="text-danger"></span>
+                    </div>
+
+                    @* Password Field with Floating Label *@
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" id="password" class="form-control" autocomplete="new-password" type="password" placeholder="Password" />
+                        <label for="password">Password</label>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                    @* Confirm Password Field with Floating Label *@
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.ConfirmPassword" id="confirmPassword" class="form-control" autocomplete="new-password" type="password" placeholder="Confirm Password" />
+                        <label for="confirmPassword">Confirm Password</label>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    @* Register Button *@
+                    <button id="registerSubmit" type="submit" class="btn btn-login w-100 btn-lg">Register</button>
+                </form>
             </div>
-
-            @* Username Field with Floating Label *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Username" id="username" class="form-control" placeholder="Username" />
-                <label for="username">Username</label>
-                <span asp-validation-for="Input.Username" class="text-danger"></span>
-            </div>
-
-            @* Password Field with Floating Label *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" id="password" class="form-control" autocomplete="new-password" type="password" placeholder="Password" />
-                <label for="password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-
-            @* Confirm Password Field with Floating Label *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" id="confirmPassword" class="form-control" autocomplete="new-password" type="password" placeholder="Confirm Password" />
-                <label for="confirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            @* Register Button *@
-            <button id="registerSubmit" type="submit" class="btn btn-login w-100 btn-lg">Register</button>
-        </form>
+        </section>
 
         @* External Registration Section *@
-        <section class="mt-4 text-center">
+        @* <section class="mt-4 text-center">
             <h3>Or Use Another Service to Register</h3>
             @if ((Model.ExternalLogins?.Count ?? 0) == 0)
             {
@@ -64,7 +68,7 @@
                     }
                 </form>
             }
-        </section>
+        </section> *@
     </div>
 </div>
 
