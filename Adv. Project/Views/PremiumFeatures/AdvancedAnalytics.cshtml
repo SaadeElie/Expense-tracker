@@ -1,4 +1,4 @@
-﻿@model IEnumerable<dynamic>
+﻿@model IEnumerable<TopExpenseViewModel>
 
 @{
     ViewData["Title"] = "Advanced Analytics";
@@ -7,17 +7,21 @@
 <div id="advanced-analytics" class="container mt-4">
     <div class="text-center mb-4">
         <h1 class="display-4 text-primary">Advanced Analytics</h1>
-        <p class="lead">Gain deeper insights into your monthly financial data.</p>
+        <p class="lead">Gain deeper insights into your monthly expenses.</p>
     </div>
 
-    <div class="card shadow-lg">
+    <!-- Top Expense Category Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header text-center bg-dark text-white">
+            <h5>Top Expense Category Each Month</h5>
+        </div>
         <div class="card-body">
             <table class="table table-bordered text-center">
-                <thead class="thead-dark">
+                <thead class="thead-light">
                     <tr>
                         <th>Month</th>
-                        <th class="text-success">Total Income</th>
-                        <th class="text-danger">Total Expenses</th>
+                        <th>Top Category</th>
+                        <th>Total Spent</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,12 +29,14 @@
                     {
                         <tr>
                             <td><strong>@item.Month</strong></td>
-                            <td class="text-success font-weight-bold">@item.Income.ToString("C")</td>
-                            <td class="text-danger font-weight-bold">@item.Expenses.ToString("C")</td>
+                            <td>@item.TopCategory</td>
+                            <td class="text-danger font-weight-bold">@item.TotalSpent.ToString("C")</td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
-</div>
+
+
+

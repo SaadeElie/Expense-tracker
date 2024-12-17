@@ -33,27 +33,41 @@ namespace Adv._Project.Controllers
         }
 
         // GET: PremiumFeatures/AdvancedAnalytics
+        // GET: PremiumFeatures/AdvancedAnalytics
         public async Task<IActionResult> AdvancedAnalytics()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return Challenge();
 
             var transactions = await _context.Transactions
-                .Where(t => t.UserId == user.Id)
+                .Where(t => t.UserId == user.Id && t.Type == TransactionType.Expense)
                 .ToListAsync();
 
             var monthlyData = transactions
                 .GroupBy(t => new { t.Date.Year, t.Date.Month })
-                .Select(g => new
+                .Select(g => new TopExpenseViewModel
                 {
                     Month = new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMM yyyy"),
-                    Income = g.Where(t => t.Type == TransactionType.Income).Sum(t => t.Amount),
-                    Expenses = g.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount),
+                    TopCategory = g.GroupBy(t => t.Category)
+                                   .OrderByDescending(cg => cg.Sum(t => t.Amount))
+                                   .FirstOrDefault()?.Key ?? "Uncategorized",
+                    TotalSpent = g.GroupBy(t => t.Category)
+                                  .OrderByDescending(cg => cg.Sum(t => t.Amount))
+                                  .FirstOrDefault()?.Sum(t => t.Amount) ?? 0
                 })
                 .ToList();
 
-            return View(monthlyData); // Pass the data to the view
+            // Optional: Log the data (only for debugging purposes)
+            foreach (var data in monthlyData)
+            {
+                Console.WriteLine($"Month: {data.Month}, Top Category: {data.TopCategory}, Total Spent: {data.TotalSpent}");
+            }
+
+            return View(monthlyData);
         }
+
+
+
 
         // GET: PremiumFeatures/DownloadReport
         public async Task<IActionResult> DownloadReport()
