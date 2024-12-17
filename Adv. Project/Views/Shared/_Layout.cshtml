@@ -9,6 +9,92 @@
     <link rel="stylesheet" href="~/Adv._Project.styles.css" asp-append-version="true" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        .container {
+            max-width: 1720px;
+        }
+
+        .content-wrapper {
+            margin-top: 10%;
+        }
+
+        .form-floating > .form-control {
+            height: calc(2.7rem + 2px) !important;
+            padding: 0.5rem 0.75rem;
+        }
+
+            .form-floating > .form-control:focus,
+            .form-floating > .form-control:not(:placeholder-shown) {
+                border-color: #6c757d;
+                box-shadow: none;
+                border-width: 1px;
+            }
+
+                .form-floating > .form-control:focus ~ label,
+                .form-floating > .form-control:not(:placeholder-shown) ~ label {
+                    transform: scale(0.85) translateY(-0.7rem) translateX(0.7rem);
+                    color: #495057;
+                }
+
+        .form-floating label {
+            padding: 0.6rem 0.9rem;
+            color: #6c757d;
+            transition: all 0.4s;
+        }
+
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 0 200px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-wrapper {
+            padding: 10px;
+        }
+
+        #email, #password, #username, #confirmPassword {
+            border-radius: 1.4rem;
+            padding: 0.5rem 0.75rem;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn, .btn:hover {
+            padding: 0.5rem 1rem;
+            border: 1px solid #565656;
+            color: #444444;
+            border-radius: 1.4rem;
+        }
+
+        .btn-login {
+            padding: 0.5rem 1rem;
+            background-color: #00a699;
+            border: 1px solid #00a699;
+            color: #F4F4F4;
+            border-radius: 1.4rem;
+        }
+
+            .btn-login:hover {
+                background-color: #009287;
+                border-color: #009287;
+                color: #F4F4F4;
+            }
+
+        .no-account a {
+            color: #607D8B;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+            .no-account a:hover {
+                color: #2196F3;
+            }
+    </style>
 </head>
 <body>
     <header>
